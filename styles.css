@@ -45,24 +45,23 @@ body {
   overflow-x: hidden;
 }
 
-/* --- Lucy's floral frame, bleeding in from the page edges ----------------
-   The artwork sits on the same cream as the page, so multiply blends the
-   paper away and leaves only the flowers. Hidden when there's no room. */
+/* --- The floral frame, bleeding in from the page edges -------------------
+   Vector art (see art/build_card.py), so it stays sharp at any size and on
+   any screen. Hidden when the window is too narrow to carry it. */
 .frame {
   position: fixed;
   top: 0;
-  width: 15vw;
-  max-width: 230px;
+  width: 16vw;
+  max-width: 250px;
   height: 100%;
   background-repeat: no-repeat;
-  background-size: cover;
-  mix-blend-mode: multiply;
-  opacity: 0.7;
+  background-size: auto 100%;
+  opacity: 0.88;
   pointer-events: none;
   z-index: 0;
 }
-.frame--left  { left: 0;  background-image: url("images/floral-left.jpg");  background-position: left center; }
-.frame--right { right: 0; background-image: url("images/floral-right.jpg"); background-position: right center; }
+.frame--left  { left: 0;  background-image: url("images/floral-left.svg");  background-position: left center; }
+.frame--right { right: 0; background-image: url("images/floral-right.svg"); background-position: right center; }
 
 @media (max-width: 1040px) { .frame { display: none; } }
 
@@ -116,9 +115,8 @@ body {
 }
 .hero__barn {
   display: block;
-  width: min(88%, 21rem);
+  width: min(92%, 25rem);
   margin: 0 auto clamp(1.5rem, 4vw, 2.25rem);
-  mix-blend-mode: multiply;
 }
 .hero__names {
   font-family: var(--display);
@@ -428,8 +426,7 @@ a.plain:hover, a.plain:focus-visible { color: var(--olive); border-bottom-color:
   display: block;
   width: min(100%, 20rem);
   margin: 0 auto 1.25rem;
-  mix-blend-mode: multiply;
-  opacity: 0.9;
+  opacity: 0.95;
 }
 .foot p {
   font-family: var(--script);

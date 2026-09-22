@@ -6,7 +6,8 @@ The wedding website. Plain HTML and CSS, no build step, no framework. Open
 ```
 index.html     all the words — this is the only file you need to edit
 styles.css     colours, type and layout (taken from Lucy's save-the-date)
-images/        the barn drawing, Lucy's floral artwork, our photos
+images/        the barn, the floral frame, our photos
+art/           the save-the-date, redrawn as vector art
 ```
 
 ## Changing the words
@@ -51,6 +52,40 @@ phones.
 ## Deploying
 
 See `DEPLOY.md`.
+
+## The artwork
+
+Lucy's original save-the-date was a 1135×1600 JPEG — fine on a phone screen,
+too small and too compressed to enlarge or print. `art/build_card.py` redraws
+it as vector art, so it's sharp at any size, from a website thumbnail to a
+poster.
+
+The barn's geometry was measured off Lucy's drawing (the roof silhouette was
+sampled column by column, which is why the left cat-slide sweeps and the right
+runs at a steadier pitch). The wildflower frame is generated — petals, buds,
+seed pods, ferns and stems drawn from a palette sampled out of her card — so
+re-running the script reshuffles the planting. The lettering is real type,
+Cormorant Garamond and Italianno, embedded in the file.
+
+```bash
+cd art
+python3 build_card.py all     # all six SVGs
+node render.mjs               # PNGs and print-ready PDFs into art/out/
+```
+
+| File | What it's for |
+| ---- | ------------- |
+| `art/save-the-date.svg` | the whole card, fonts embedded — send this to a printer |
+| `art/barn.svg` | just the barn, transparent — used in the site header |
+| `art/floral-left.svg`, `floral-right.svg` | the frame's two columns, for the page edges |
+| `art/floral-spray.svg` | the coral cluster, used in the site footer |
+| `art/card-blank.svg` | card with no lettering, for a different message |
+| `art/out/save-the-date-3000.png` | 3000×4242 raster, for anything that won't take an SVG |
+| `art/out/save-the-date-a5.pdf` | A5, print ready |
+| `art/out/save-the-date-a6.pdf` | A6, standard postcard size |
+
+To change a colour, edit the palette block at the top of `build_card.py` and
+re-run. To reshuffle the flowers, change the seed in `random.Random(20270605)`.
 
 ## Colours
 
