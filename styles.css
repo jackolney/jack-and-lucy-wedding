@@ -1,0 +1,471 @@
+/* ==========================================================================
+   Jack & Lucy — 5th June 2027
+   Palette and type taken from Lucy's save-the-date card.
+   You shouldn't need to touch this file to change wording — edit index.html.
+   ========================================================================== */
+
+:root {
+  /* --- Lucy's card, sampled --------------------------------------------- */
+  --paper:        #f8f6f2;   /* the card stock */
+  --paper-deep:   #f1ebe1;   /* panels, quiet blocks */
+  --paper-edge:   #fbfaf7;   /* raised surfaces */
+  --ink:          #4a443c;   /* body text */
+  --ink-quiet:    #8a8076;   /* the card's own lettering colour */
+  --ink-faint:    #a89e93;
+  --rule:         #ded6c9;
+
+  --rose:         #e3a09b;
+  --cornflower:   #93accb;
+  --coral:        #ec9e77;
+  --olive:        #8e9670;
+
+  /* A letterpress invitation commits to one look on purpose: cream paper,
+     pencil and watercolour. There is no dark variant by design. */
+  color-scheme: light;
+
+  --measure: 34rem;          /* ~65 characters of body text */
+  --gutter: 1.25rem;
+
+  --display: "Cormorant Garamond", "Cormorant", Garamond, "Times New Roman", serif;
+  --script:  "Italianno", "Snell Roundhand", cursive;
+  --body:    "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--body);
+  font-weight: 300;
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* --- Lucy's floral frame, bleeding in from the page edges ----------------
+   The artwork sits on the same cream as the page, so multiply blends the
+   paper away and leaves only the flowers. Hidden when there's no room. */
+.frame {
+  position: fixed;
+  top: 0;
+  width: 15vw;
+  max-width: 230px;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  mix-blend-mode: multiply;
+  opacity: 0.7;
+  pointer-events: none;
+  z-index: 0;
+}
+.frame--left  { left: 0;  background-image: url("images/floral-left.jpg");  background-position: left center; }
+.frame--right { right: 0; background-image: url("images/floral-right.jpg"); background-position: right center; }
+
+@media (max-width: 1040px) { .frame { display: none; } }
+
+/* --- Shell --------------------------------------------------------------- */
+.shell {
+  position: relative;
+  z-index: 1;
+  max-width: 46rem;
+  margin: 0 auto;
+  padding-inline: var(--gutter);
+}
+
+/* --- Navigation ---------------------------------------------------------- */
+.nav {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 20;
+  background: var(--paper);
+  background: color-mix(in srgb, var(--paper) 90%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--rule);
+}
+.nav__inner {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 0.5rem var(--gutter);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.15rem 1.15rem;
+}
+.nav a {
+  font-family: var(--body);
+  font-size: 0.6875rem;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-quiet);
+  text-decoration: none;
+  padding: 0.35rem 0;
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+.nav a:hover,
+.nav a:focus-visible { color: var(--ink); border-bottom-color: var(--rose); }
+
+/* --- Hero: the save-the-date, restated ----------------------------------- */
+.hero {
+  text-align: center;
+  padding-block: clamp(2.5rem, 7vw, 5rem) clamp(2rem, 5vw, 3.5rem);
+}
+.hero__barn {
+  display: block;
+  width: min(88%, 21rem);
+  margin: 0 auto clamp(1.5rem, 4vw, 2.25rem);
+  mix-blend-mode: multiply;
+}
+.hero__names {
+  font-family: var(--display);
+  font-weight: 300;
+  font-size: clamp(3.25rem, 15vw, 6rem);
+  line-height: 0.98;
+  letter-spacing: 0.06em;
+  color: var(--ink-quiet);
+  margin: 0;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+.hero__amp {
+  display: block;
+  font-family: var(--script);
+  font-size: clamp(2.5rem, 9vw, 3.75rem);
+  letter-spacing: 0;
+  text-transform: none;
+  line-height: 1;
+  margin: 0.15em 0;
+  color: var(--ink-faint);
+}
+.hero__date {
+  font-family: var(--display);
+  font-size: clamp(1.25rem, 5vw, 1.75rem);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-quiet);
+  margin: 1.5rem 0 0.4rem;
+}
+.hero__place {
+  font-family: var(--body);
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin: 0;
+}
+.hero__note {
+  font-family: var(--script);
+  font-size: clamp(1.6rem, 6vw, 2.1rem);
+  line-height: 1.2;
+  color: var(--ink-quiet);
+  margin: 1.75rem 0 0;
+}
+
+/* --- Sections ------------------------------------------------------------ */
+.section { padding-block: clamp(2.5rem, 7vw, 4.25rem); }
+.section + .section { border-top: 1px solid var(--rule); }
+
+.section__eyebrow {
+  font-size: 0.6875rem;
+  font-weight: 400;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin: 0 0 0.5rem;
+  text-align: center;
+}
+.section__title {
+  font-family: var(--display);
+  font-weight: 300;
+  font-size: clamp(1.9rem, 7vw, 2.6rem);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-quiet);
+  text-align: center;
+  margin: 0 0 0.75rem;
+  text-wrap: balance;
+}
+.section__standfirst {
+  max-width: var(--measure);
+  margin: 0 auto clamp(1.75rem, 5vw, 2.5rem);
+  text-align: center;
+  color: var(--ink);
+}
+.prose { max-width: var(--measure); margin-inline: auto; }
+.prose p { margin: 0 0 1rem; }
+.prose p:last-child { margin-bottom: 0; }
+
+/* --- Order of service ---------------------------------------------------- */
+.order {
+  max-width: 30rem;
+  margin: 0 auto;
+  display: grid;
+  gap: 0;
+}
+.order__row {
+  display: grid;
+  grid-template-columns: 5.25rem 1fr;
+  gap: 0 1.25rem;
+  align-items: baseline;
+  padding-block: 0.9rem;
+  border-bottom: 1px solid var(--rule);
+}
+.order__row:last-child { border-bottom: 0; }
+.order__time {
+  font-family: var(--display);
+  font-size: 1.1875rem;
+  letter-spacing: 0.08em;
+  color: var(--olive);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  white-space: nowrap;
+}
+.order__what {
+  font-family: var(--display);
+  font-size: 1.25rem;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+  line-height: 1.3;
+  color: var(--ink);
+}
+.order__detail {
+  grid-column: 2;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--ink-quiet);
+  margin-top: 0.2rem;
+}
+/* the transfer between church and barn reads as a move, not an event */
+.order__row--move { background: var(--paper-deep); }
+.order__row--move .order__what { color: var(--ink-quiet); }
+.order__row--move .order__time { color: var(--ink-faint); }
+
+@media (max-width: 460px) {
+  .order__row { grid-template-columns: 1fr; gap: 0; }
+  .order__time { text-align: left; font-size: 1.0625rem; }
+  .order__detail { grid-column: 1; }
+}
+
+/* --- Place cards --------------------------------------------------------- */
+.places { display: grid; gap: 1.25rem; }
+.place {
+  background: var(--paper-edge);
+  border: 1px solid var(--rule);
+  padding: clamp(1.25rem, 4vw, 1.75rem);
+}
+.place__label {
+  font-size: 0.6875rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin: 0 0 0.35rem;
+}
+.place__name {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 1.5rem;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  margin: 0 0 0.6rem;
+  text-wrap: balance;
+}
+.place__address {
+  margin: 0 0 0.9rem;
+  font-style: normal;
+  line-height: 1.6;
+}
+.place__address .postcode { font-variant-numeric: tabular-nums; letter-spacing: 0.04em; }
+.place p { margin: 0 0 0.9rem; }
+.place p:last-child { margin-bottom: 0; }
+
+.linkline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  align-items: center;
+}
+a.plain {
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--rose);
+  padding-bottom: 1px;
+  transition: border-color 0.2s, color 0.2s;
+}
+a.plain:hover, a.plain:focus-visible { color: var(--olive); border-bottom-color: var(--olive); }
+
+.between {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.6rem 0;
+  color: var(--ink-quiet);
+  font-size: 0.9375rem;
+}
+.between::before,
+.between::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--rule);
+}
+
+/* --- Detail lists -------------------------------------------------------- */
+.dl { max-width: var(--measure); margin-inline: auto; display: grid; gap: 1.5rem; }
+.dl__item { display: grid; gap: 0.3rem; }
+.dl__term {
+  font-family: var(--display);
+  font-size: 1.1875rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.dl__desc { margin: 0; color: var(--ink); }
+.dl__desc p { margin: 0 0 0.6rem; }
+.dl__desc p:last-child { margin-bottom: 0; }
+
+/* --- Notes and flags ----------------------------------------------------- */
+.note {
+  max-width: var(--measure);
+  margin: 1.75rem auto 0;
+  padding: 1rem 1.25rem;
+  background: var(--paper-deep);
+  border-left: 2px solid var(--coral);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+.note strong { font-weight: 700; color: var(--ink); }
+
+/* Marks anything still to be confirmed, so guests know and we can spot it */
+.tbc {
+  display: inline-block;
+  font-family: var(--body);
+  font-size: 0.625rem;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #8a6a4e;
+  background: #f6e3d3;
+  border-radius: 2px;
+  padding: 0.12em 0.45em;
+  vertical-align: 0.15em;
+  white-space: nowrap;
+}
+
+/* --- Photographs --------------------------------------------------------- */
+.plates {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  gap: 1rem;
+  margin-block: clamp(1.75rem, 5vw, 2.5rem) 0;
+}
+.plate { margin: 0; }
+.plate img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  max-width: 100%;
+  background: var(--paper-deep);
+}
+.plate figcaption {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+/* --- RSVP ---------------------------------------------------------------- */
+.rsvp { text-align: center; }
+.rsvp__email {
+  font-family: var(--display);
+  font-size: clamp(1.25rem, 5.5vw, 1.875rem);
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  word-break: break-word;
+  display: inline-block;
+  border-bottom: 1px solid var(--rose);
+  text-decoration: none;
+  padding-bottom: 2px;
+  margin-bottom: 1.25rem;
+}
+.rsvp__email:hover, .rsvp__email:focus-visible { color: var(--olive); border-bottom-color: var(--olive); }
+.copy {
+  font-family: var(--body);
+  font-size: 0.6875rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-quiet);
+  background: transparent;
+  border: 1px solid var(--rule);
+  padding: 0.55rem 1.1rem;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+.copy:hover, .copy:focus-visible { border-color: var(--olive); color: var(--ink); background: var(--paper-edge); }
+
+/* --- Save-the-date card -------------------------------------------------- */
+.card-wrap { text-align: center; margin-top: clamp(1.75rem, 5vw, 2.5rem); }
+.card-wrap img {
+  width: min(100%, 22rem);
+  border: 1px solid var(--rule);
+  display: block;
+  margin: 0 auto;
+}
+
+/* --- Footer -------------------------------------------------------------- */
+.foot {
+  border-top: 1px solid var(--rule);
+  padding-block: 2.5rem 3rem;
+  text-align: center;
+}
+.foot__spray {
+  display: block;
+  width: min(100%, 20rem);
+  margin: 0 auto 1.25rem;
+  mix-blend-mode: multiply;
+  opacity: 0.9;
+}
+.foot p {
+  font-family: var(--script);
+  font-size: 1.75rem;
+  color: var(--ink-quiet);
+  margin: 0;
+}
+.foot small {
+  display: block;
+  font-family: var(--body);
+  font-size: 0.6875rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-top: 0.75rem;
+}
+
+/* --- Accessibility ------------------------------------------------------- */
+:focus-visible { outline: 2px solid var(--olive); outline-offset: 3px; }
+.skip {
+  position: absolute; left: -9999px;
+  background: var(--paper-edge); color: var(--ink);
+  padding: 0.6rem 1rem; z-index: 50;
+}
+.skip:focus { left: 1rem; top: 1rem; }
+
+html { scroll-behavior: smooth; }
+[id] { scroll-margin-top: 4.5rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}
+
+@media print {
+  .nav, .frame, .copy { display: none; }
+  body { background: #fff; }
+  .section + .section { border-top: 1px solid #ccc; }
+}
