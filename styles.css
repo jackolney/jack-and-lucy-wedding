@@ -23,7 +23,7 @@
      pencil and watercolour. There is no dark variant by design. */
   color-scheme: light;
 
-  --measure: 34rem;          /* ~65 characters of body text */
+  --measure: 31rem;          /* ~62 characters of body text */
   --gutter: 1.25rem;
 
   --display: "Cormorant Garamond", "Cormorant", Garamond, "Times New Roman", serif;
@@ -32,6 +32,11 @@
 }
 
 * { box-sizing: border-box; }
+
+/* The width/height attributes on each <img> are there to reserve layout space
+   and stop the page jumping as images load. Without this they also pin the
+   rendered height, which overrides aspect-ratio and stretches the artwork. */
+img { height: auto; }
 
 body {
   margin: 0;
@@ -51,11 +56,11 @@ body {
 .frame {
   position: fixed;
   top: 0;
-  width: 16vw;
-  max-width: 250px;
+  width: 21vw;
+  max-width: 310px;
   height: 100%;
   background-repeat: no-repeat;
-  background-size: auto 100%;
+  background-size: 100% auto;
   opacity: 0.88;
   pointer-events: none;
   z-index: 0;
@@ -63,13 +68,13 @@ body {
 .frame--left  { left: 0;  background-image: url("images/floral-left.svg");  background-position: left center; }
 .frame--right { right: 0; background-image: url("images/floral-right.svg"); background-position: right center; }
 
-@media (max-width: 1040px) { .frame { display: none; } }
+@media (max-width: 900px) { .frame { display: none; } }
 
 /* --- Shell --------------------------------------------------------------- */
 .shell {
   position: relative;
   z-index: 1;
-  max-width: 46rem;
+  max-width: 37rem;
   margin: 0 auto;
   padding-inline: var(--gutter);
 }
@@ -356,7 +361,7 @@ a.plain:hover, a.plain:focus-visible { color: var(--olive); border-bottom-color:
 /* --- Photographs --------------------------------------------------------- */
 .plates {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
   gap: 1rem;
   margin-block: clamp(1.75rem, 5vw, 2.5rem) 0;
 }
@@ -364,7 +369,7 @@ a.plain:hover, a.plain:focus-visible { color: var(--olive); border-bottom-color:
 .plate img {
   display: block;
   width: 100%;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 4 / 5;
   object-fit: cover;
   max-width: 100%;
   background: var(--paper-deep);
