@@ -7,7 +7,7 @@ The wedding website. Plain HTML and CSS, no build step, no framework. Open
 index.html     all the words — this is the only file you need to edit
 styles.css     colours, type and layout (taken from Lucy's save-the-date)
 images/        the barn, the floral frame, our photos
-art/           the save-the-date, redrawn as vector art
+art/           Lucy's master artwork, and the scripts that cut the site images from it
 ```
 
 ## Changing the words
@@ -55,37 +55,44 @@ See `DEPLOY.md`.
 
 ## The artwork
 
-Lucy's original save-the-date was a 1135×1600 JPEG — fine on a phone screen,
-too small and too compressed to enlarge or print. `art/build_card.py` redraws
-it as vector art, so it's sharp at any size, from a website thumbnail to a
-poster.
+All of it is Lucy's. The two masters live in `art/source/` and everything the
+site uses is derived from them, so those two files are the only ones to keep
+safe:
 
-The barn's geometry was measured off Lucy's drawing (the roof silhouette was
-sampled column by column, which is why the left cat-slide sweeps and the right
-runs at a steadier pitch). The wildflower frame is generated — petals, buds,
-seed pods, ferns and stems drawn from a palette sampled out of her card — so
-re-running the script reshuffles the planting. The lettering is real type,
-Cormorant Garamond and Italianno, embedded in the file.
-
-```bash
-cd art
-python3 build_card.py all     # all six SVGs
-node render.mjs               # PNGs and print-ready PDFs into art/out/
+```
+art/source/card.png           the save-the-date, 1056x1489
+art/source/floral-sides.png   the two flower columns, transparent
 ```
 
-| File | What it's for |
-| ---- | ------------- |
-| `art/save-the-date.svg` | the whole card, fonts embedded — send this to a printer |
-| `art/barn.svg` | just the barn, transparent — used in the site header |
-| `art/floral-left.svg`, `floral-right.svg` | the frame's two columns, for the page edges |
-| `art/floral-spray.svg` | the coral cluster, used in the site footer |
-| `art/card-blank.svg` | card with no lettering, for a different message |
-| `art/out/save-the-date-3000.png` | 3000×4242 raster, for anything that won't take an SVG |
-| `art/out/save-the-date-a5.pdf` | A5, print ready |
-| `art/out/save-the-date-a6.pdf` | A6, standard postcard size |
+`art/build_assets.py` cuts the site's images out of them:
 
-To change a colour, edit the palette block at the top of `build_card.py` and
-re-run. To reshuffle the flowers, change the seed in `random.Random(20270605)`.
+```bash
+python3 art/build_assets.py
+```
+
+| Produces | From |
+| -------- | ---- |
+| `images/save-the-date.jpg` | the card, sized down for the page |
+| `images/barn.webp` | the barn, lifted off the card |
+| `images/floral-spray.webp` | the coral cluster at the foot of the card |
+| `images/floral-left.webp`, `floral-right.webp` | the flower columns, split and cropped |
+
+Two things that script does which are worth knowing if you ever adjust it.
+
+The barn and the spray are cut out of the card, so the paper behind them has to
+go or they'd sit on a faint cream rectangle. Rather than masking to a flat
+colour, it turns the paper into transparency and divides it back out of the
+ink, which keeps the pencil its own warm grey instead of washing it out.
+
+The wreath overlaps the barn at both ends, so no rectangle around the barn is
+free of flowers. The barn is neutral pencil and the flowers are not, so the
+barn's transparency is also gated on saturation — anything coloured drops out,
+which clears the fragments without hand-masking.
+
+**If you replace a master**, drop the new file into `art/source/` under the same
+name, re-run the script, and commit. If you swap in a card with a different
+layout, the crop boxes at the top of the script (`BARN_BOX`, `SPRAY_BOX`) will
+need moving.
 
 ## Colours
 

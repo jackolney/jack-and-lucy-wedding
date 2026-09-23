@@ -61,8 +61,8 @@ def main():
     css = open(os.path.join(ROOT, "styles.css"), encoding="utf-8").read()
 
     # Fold the background-image urls in the stylesheet into data URIs
-    for name in ("floral-left.svg", "floral-right.svg"):
-        uri = data_uri(os.path.join(ROOT, "images", name), "image/svg+xml")
+    for name in ("floral-left.webp", "floral-right.webp"):
+        uri = data_uri(os.path.join(ROOT, "images", name), "image/webp")
         css = css.replace(f'url("images/{name}")', f'url("{uri}")')
 
     # Drop the Google Fonts link and the stylesheet link; inline both instead
@@ -71,13 +71,18 @@ def main():
     html = html.replace('<link rel="stylesheet" href="styles.css">',
                         f"<style>{font_css()}\n{css}</style>")
 
-    # Inline every <img src="images/...">
+    # Inline every <img src="images/...">. Only the photographs are re-encoded
+    # on the way in; the artwork carries transparency and is embedded as-is.
+    MIME = {".webp": "image/webp", ".svg": "image/svg+xml",
+            ".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg"}
+
     def swap(m):
         src = m.group(1)
         path = os.path.join(ROOT, src)
-        if src.endswith(".svg"):
-            return f'src="{data_uri(path, "image/svg+xml")}"'
-        return f'src="{photo_uri(path)}"'
+        ext = os.path.splitext(src)[1].lower()
+        if os.path.basename(src).startswith("photo-"):
+            return f'src="{photo_uri(path)}"'
+        return f'src="{data_uri(path, MIME[ext])}"'
 
     html = re.sub(r'src="(images/[^"]+)"', swap, html)
 

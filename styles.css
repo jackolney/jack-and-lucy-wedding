@@ -1,6 +1,6 @@
 /* ==========================================================================
    Jack & Lucy — 5th June 2027
-   Palette and type taken from Lucy's save-the-date card.
+   Palette and type taken from Lucy's save-the-date card; the artwork is hers.
    You shouldn't need to touch this file to change wording — edit index.html.
    ========================================================================== */
 
@@ -51,8 +51,8 @@ body {
 }
 
 /* --- The floral frame, bleeding in from the page edges -------------------
-   Vector art (see art/build_card.py), so it stays sharp at any size and on
-   any screen. Hidden when the window is too narrow to carry it. */
+   Lucy's flower columns, cut in half and cropped by art/build_assets.py.
+   Transparent, so they sit on the paper. Hidden when there's no room. */
 .frame {
   position: fixed;
   top: 0;
@@ -65,8 +65,8 @@ body {
   pointer-events: none;
   z-index: 0;
 }
-.frame--left  { left: 0;  background-image: url("images/floral-left.svg");  background-position: left center; }
-.frame--right { right: 0; background-image: url("images/floral-right.svg"); background-position: right center; }
+.frame--left  { left: 0;  background-image: url("images/floral-left.webp");  background-position: left center; }
+.frame--right { right: 0; background-image: url("images/floral-right.webp"); background-position: right center; }
 
 @media (max-width: 900px) { .frame { display: none; } }
 
