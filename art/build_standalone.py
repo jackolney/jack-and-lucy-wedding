@@ -86,7 +86,12 @@ def main():
 
     html = re.sub(r'src="(images/[^"]+)"', swap, html)
 
-    # A standalone file needs the document wrapper the published page gets free
+    # index.html carries its own doctype + viewport header; drop it and re-add
+    # the full wrapper below so the inlined <style> sits inside <head>
+    html = re.sub(r'\A\s*<!doctype html>.*?<meta name="viewport"[^>]*>\s*', "", html,
+                  flags=re.S | re.I)
+
+    # A standalone file needs the document wrapper
     html = ('<!doctype html>\n<html lang="en-GB">\n<head>\n'
             '<meta charset="utf-8">\n'
             '<meta name="viewport" content="width=device-width, initial-scale=1, '

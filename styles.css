@@ -52,12 +52,16 @@ body {
 
 /* --- The floral frame, bleeding in from the page edges -------------------
    Lucy's flower columns, cut in half and cropped by art/build_assets.py.
-   Transparent, so they sit on the paper. Hidden when there's no room. */
+   Transparent, so they sit on the paper.
+   Wide screens: the flowers sit either side and the text column narrows to
+   fit between them. Phones: there isn't room for both, so the flowers drop
+   behind the text as a faded background. */
+:root { --frame-w: min(21vw, 310px); }
+
 .frame {
   position: fixed;
   top: 0;
-  width: 21vw;
-  max-width: 310px;
+  width: var(--frame-w);
   height: 100%;
   background-repeat: no-repeat;
   background-size: 100% auto;
@@ -68,15 +72,33 @@ body {
 .frame--left  { left: 0;  background-image: url("images/floral-left.webp");  background-position: left center; }
 .frame--right { right: 0; background-image: url("images/floral-right.webp"); background-position: right center; }
 
-@media (max-width: 900px) { .frame { display: none; } }
+@media (max-width: 760px) {
+  .frame {
+    width: 42vw;
+    height: 100vh;
+    height: 100svh;
+    background-size: auto 78%;
+    opacity: 0.3;
+  }
+  /* crop the outer edge off-screen so the flowers lean in from the sides */
+  .frame--left  { background-position: right center; }
+  .frame--right { background-position: left center; }
+}
 
 /* --- Shell --------------------------------------------------------------- */
 .shell {
   position: relative;
   z-index: 1;
-  max-width: 37rem;
+  /* keep the text between the flower columns; never wider than ~37rem */
+  max-width: min(37rem, calc(100vw - 2 * var(--frame-w) + 2rem));
   margin: 0 auto;
   padding-inline: var(--gutter);
+}
+
+@media (max-width: 760px) {
+  .shell { max-width: 37rem; }
+  /* a soft halo of paper behind the letters, so they read cleanly over the flowers */
+  .shell { text-shadow: 0 0 0.6em var(--paper), 0 0 0.25em var(--paper); }
 }
 
 /* --- Navigation ---------------------------------------------------------- */
@@ -85,7 +107,7 @@ body {
   top: env(safe-area-inset-top, 0px);
   z-index: 20;
   background: var(--paper);
-  background: color-mix(in srgb, var(--paper) 90%, transparent);
+  background: color-mix(in srgb, var(--paper) 78%, transparent);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--rule);
 }
@@ -112,6 +134,20 @@ body {
 }
 .nav a:hover,
 .nav a:focus-visible { color: var(--ink); border-bottom-color: var(--rose); }
+
+@media (max-width: 760px) {
+  .nav__inner {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    gap: 1.15rem;
+    padding-block: 0.35rem;
+  }
+  .nav__inner::-webkit-scrollbar { display: none; }
+  .nav a { white-space: nowrap; flex: none; padding-block: 0.55rem; }
+}
 
 /* --- Hero: the save-the-date, restated ----------------------------------- */
 .hero {
@@ -243,7 +279,7 @@ body {
   margin-top: 0.2rem;
 }
 /* the transfer between church and barn reads as a move, not an event */
-.order__row--move { background: var(--paper-deep); }
+.order__row--move { background: color-mix(in srgb, var(--paper-deep) 78%, transparent); }
 .order__row--move .order__what { color: var(--ink-quiet); }
 .order__row--move .order__time { color: var(--ink-faint); }
 
@@ -257,6 +293,7 @@ body {
 .places { display: grid; gap: 1.25rem; }
 .place {
   background: var(--paper-edge);
+  background: color-mix(in srgb, var(--paper-edge) 72%, transparent);
   border: 1px solid var(--rule);
   padding: clamp(1.25rem, 4vw, 1.75rem);
 }
@@ -336,6 +373,7 @@ a.plain:hover, a.plain:focus-visible { color: var(--olive); border-bottom-color:
   margin: 1.75rem auto 0;
   padding: 1rem 1.25rem;
   background: var(--paper-deep);
+  background: color-mix(in srgb, var(--paper-deep) 78%, transparent);
   border-left: 2px solid var(--coral);
   font-size: 0.9375rem;
   line-height: 1.6;
