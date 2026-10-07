@@ -238,6 +238,28 @@ body {
 .prose p { margin: 0 0 1rem; }
 .prose p:last-child { margin-bottom: 0; }
 
+/* Phones: the flowers sit behind the text, so each section gets its own
+   card (same look as the venue cards) to keep the words easy to read. */
+@media (max-width: 760px) {
+  .shell { padding-inline: 0.85rem; }
+  .section {
+    background: var(--paper-edge);
+    background: color-mix(in srgb, var(--paper-edge) 92%, transparent);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    box-shadow: 0 1px 10px rgba(74, 68, 60, 0.05);
+    padding: 2rem 1.15rem 2.1rem;
+    margin-block: 0 1rem;
+  }
+  .section + .section { border-top: 1px solid var(--rule); }
+  /* venue cards inside a section card: a slightly deeper panel, no double frame */
+  .section .place {
+    background: var(--paper);
+    border-color: color-mix(in srgb, var(--rule) 70%, transparent);
+  }
+  .foot { border-top: 0; padding-top: 1.5rem; }
+}
+
 /* --- Order of service ---------------------------------------------------- */
 .order {
   max-width: 30rem;
