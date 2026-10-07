@@ -25,17 +25,16 @@ Anything still undecided is marked in the page like this:
 It shows on the site as a small "to confirm" tag so guests know it isn't final.
 When you settle it, replace the text and delete that `<span>`.
 
-Currently marked to confirm:
+Nothing is currently marked to confirm. Things still to add later:
 
-- Length of the ceremony
-- Taxi firms to recommend
-- Whether to open up camping at the barn
-- Gift wording
-- Confetti in the churchyard
-- The RSVP deadline
-- The RSVP email address itself — `jackandlucy2027@gmail.com` is a placeholder.
-  Create it (or swap in whichever address you want) in **two** places in
-  `index.html`: the `href="mailto:..."` and the visible text next to it.
+- Taxi firms to recommend (Travel & Parking)
+- The schedule of the day (Timings)
+
+## The RSVP form
+
+Replies go to a Google Form and land in a Google Sheet. Until that's set up
+the form falls back to opening an email to iball.lucy+wedding@gmail.com.
+One-off setup steps are in `rsvp/README.md`.
 
 ## Adding a section
 

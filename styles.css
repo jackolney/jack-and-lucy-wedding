@@ -162,7 +162,7 @@ body {
 .hero__names {
   font-family: var(--display);
   font-weight: 300;
-  font-size: clamp(3.25rem, 15vw, 6rem);
+  font-size: clamp(2.75rem, 12vw, 4.75rem);
   line-height: 0.98;
   letter-spacing: 0.06em;
   color: var(--ink-quiet);
@@ -173,7 +173,7 @@ body {
 .hero__amp {
   display: block;
   font-family: var(--script);
-  font-size: clamp(2.5rem, 9vw, 3.75rem);
+  font-size: clamp(2.1rem, 7.5vw, 3.1rem);
   letter-spacing: 0;
   text-transform: none;
   line-height: 1;
@@ -186,15 +186,15 @@ body {
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--ink-quiet);
-  margin: 1.5rem 0 0.4rem;
+  margin: 1.5rem 0 0;
 }
 .hero__place {
   font-family: var(--body);
-  font-size: 0.75rem;
-  letter-spacing: 0.3em;
+  font-size: clamp(0.8125rem, 3.2vw, 0.9375rem);
+  letter-spacing: 0.26em;
   text-transform: uppercase;
-  color: var(--ink-faint);
-  margin: 0;
+  color: var(--ink-quiet);
+  margin: 1.4rem 0 0;
 }
 .hero__note {
   font-family: var(--script);
@@ -356,6 +356,7 @@ a.plain:hover, a.plain:focus-visible { color: var(--olive); border-bottom-color:
 /* --- Detail lists -------------------------------------------------------- */
 .dl { max-width: var(--measure); margin-inline: auto; display: grid; gap: 1.5rem; }
 .dl__item { display: grid; gap: 0.3rem; }
+.dl__desc strong { font-weight: 400; color: var(--ink-quiet); letter-spacing: 0.02em; }
 .dl__term {
   font-family: var(--display);
   font-size: 1.1875rem;
@@ -450,6 +451,116 @@ a.plain:hover, a.plain:focus-visible { color: var(--olive); border-bottom-color:
 }
 .copy:hover, .copy:focus-visible { border-color: var(--olive); color: var(--ink); background: var(--paper-edge); }
 
+/* --- RSVP form ------------------------------------------------------------
+   Lives on the page in the card's colours; replies go on to a Google Form
+   (see rsvp/README.md). */
+.rsvp-form, .rsvp-done {
+  max-width: 28rem;
+  margin: 0 auto;
+  text-align: left;
+}
+.rsvp-form .field { margin: 0 0 1.25rem; border: 0; padding: 0; min-width: 0; }
+.rsvp-form label,
+.rsvp-form legend {
+  display: block;
+  font-family: var(--display);
+  font-size: 1.125rem;
+  letter-spacing: 0.03em;
+  color: var(--ink);
+  margin: 0 0 0.35rem;
+  padding: 0;
+}
+.field__hint {
+  font-size: 0.8125rem;
+  color: var(--ink-quiet);
+  margin: -0.2rem 0 0.4rem;
+  line-height: 1.45;
+}
+.rsvp-form input[type="text"],
+.rsvp-form input[type="email"],
+.rsvp-form textarea {
+  width: 100%;
+  font: inherit;
+  font-size: 1rem;           /* 16px+ stops iPhones zooming in on tap */
+  color: var(--ink);
+  background: var(--paper-edge);
+  background: color-mix(in srgb, var(--paper-edge) 85%, transparent);
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  padding: 0.6rem 0.75rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  text-shadow: none;
+}
+.rsvp-form textarea { resize: vertical; min-height: 3.2rem; line-height: 1.5; }
+.rsvp-form input:focus,
+.rsvp-form textarea:focus {
+  outline: none;
+  border-color: var(--cornflower);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--cornflower) 28%, transparent);
+}
+.choice__opt {
+  display: flex !important;
+  align-items: flex-start;
+  gap: 0.7rem;
+  font-family: var(--body) !important;
+  font-size: 1rem !important;
+  letter-spacing: 0 !important;
+  padding: 0.7rem 0.85rem;
+  margin: 0 0 0.5rem !important;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  background: color-mix(in srgb, var(--paper-edge) 70%, transparent);
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+.choice__opt input { accent-color: var(--coral); margin: 0.3rem 0 0; flex: none; width: 1rem; height: 1rem; }
+.choice__opt:has(input:checked) {
+  border-color: var(--coral);
+  background: color-mix(in srgb, var(--coral) 12%, var(--paper-edge));
+}
+.rsvp-form__group {
+  font-size: 0.6875rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin: 1.75rem 0 0.9rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--rule);
+}
+.rsvp-form__error {
+  margin: 0 0 1rem;
+  padding: 0.7rem 0.9rem;
+  border-left: 2px solid var(--rose);
+  background: color-mix(in srgb, var(--rose) 14%, var(--paper));
+  font-size: 0.9375rem;
+}
+.send {
+  display: block;
+  margin: 1.5rem auto 0;
+  font-family: var(--body);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #fff;
+  background: var(--coral);
+  border: 1px solid var(--coral);
+  border-radius: 2px;
+  padding: 0.85rem 2.5rem;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+.send:hover, .send:focus-visible { background: #e38b60; border-color: #e38b60; }
+.send:disabled { opacity: 0.6; cursor: default; }
+.rsvp-done { text-align: center; outline: none; }
+.rsvp-done__title {
+  font-family: var(--script);
+  font-size: 2.4rem;
+  line-height: 1.1;
+  color: var(--ink-quiet);
+  margin: 0 0 0.5rem;
+}
+
 /* --- Save-the-date card -------------------------------------------------- */
 .card-wrap { text-align: center; margin-top: clamp(1.75rem, 5vw, 2.5rem); }
 .card-wrap img {
@@ -474,17 +585,21 @@ a.plain:hover, a.plain:focus-visible { color: var(--olive); border-bottom-color:
 .foot p {
   font-family: var(--script);
   font-size: 1.75rem;
+  line-height: 1.2;
   color: var(--ink-quiet);
-  margin: 0;
+  margin: 0 auto;
+  max-width: 24rem;
+  padding-inline: var(--gutter);
+  text-wrap: balance;
 }
 .foot small {
   display: block;
   font-family: var(--body);
-  font-size: 0.6875rem;
+  font-size: 0.875rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--ink-faint);
-  margin-top: 0.75rem;
+  color: var(--ink-quiet);
+  margin-top: 1rem;
 }
 
 /* --- Accessibility ------------------------------------------------------- */
@@ -505,7 +620,7 @@ html { scroll-behavior: smooth; }
 }
 
 @media print {
-  .nav, .frame, .copy { display: none; }
+  .nav, .frame, .copy, .rsvp-form { display: none; }
   body { background: #fff; }
   .section + .section { border-top: 1px solid #ccc; }
 }
