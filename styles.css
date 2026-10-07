@@ -498,23 +498,55 @@ a.plain:hover, a.plain:focus-visible { color: var(--olive); border-bottom-color:
   border-color: var(--cornflower);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--cornflower) 28%, transparent);
 }
-.choice__opt {
-  display: flex !important;
-  align-items: flex-start;
-  gap: 0.7rem;
-  font-family: var(--body) !important;
-  font-size: 1rem !important;
-  letter-spacing: 0 !important;
-  padding: 0.7rem 0.85rem;
-  margin: 0 0 0.5rem !important;
+/* The attend options. Scoped under .rsvp-form so they beat the general label
+   rule above (which was stripping their padding and pushing the circle onto
+   the box edge). The circle is drawn by hand so it centres on the text in
+   every browser. */
+.rsvp-form .choice__opt {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--body);
+  font-size: 1rem;
+  letter-spacing: 0;
+  line-height: 1.4;
+  padding: 0.75rem 0.9rem;
+  margin: 0 0 0.5rem;
   border: 1px solid var(--rule);
   border-radius: 2px;
   background: color-mix(in srgb, var(--paper-edge) 70%, transparent);
   cursor: pointer;
   transition: border-color 0.2s, background 0.2s;
 }
-.choice__opt input { accent-color: var(--coral); margin: 0.3rem 0 0; flex: none; width: 1rem; height: 1rem; }
-.choice__opt:has(input:checked) {
+.rsvp-form .choice__opt input {
+  appearance: none;
+  -webkit-appearance: none;
+  flex: none;
+  width: 1.125rem;
+  height: 1.125rem;
+  margin: 0;
+  border: 1.5px solid var(--ink-faint);
+  border-radius: 50%;
+  background: var(--paper-edge);
+  display: grid;
+  place-content: center;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+.rsvp-form .choice__opt input::before {
+  content: "";
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: var(--coral);
+  transform: scale(0);
+  transition: transform 0.15s;
+}
+.rsvp-form .choice__opt input:checked { border-color: var(--coral); }
+.rsvp-form .choice__opt input:focus { box-shadow: none; border-color: var(--coral); }
+.rsvp-form .choice__opt input:checked::before { transform: scale(1); }
+.rsvp-form .choice__opt input:focus-visible { outline: 2px solid var(--olive); outline-offset: 2px; }
+.rsvp-form .choice__opt:has(input:checked) {
   border-color: var(--coral);
   background: color-mix(in srgb, var(--coral) 12%, var(--paper-edge));
 }
